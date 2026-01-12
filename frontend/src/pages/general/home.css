@@ -1,0 +1,64 @@
+/* Container for vertical scrolling with snapping */
+.reels-container {
+  height: 100vh;
+  width: 100%;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+}
+
+/* Each video section */
+.reel {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  scroll-snap-align: start;
+  overflow: hidden;
+}
+
+/* Video styling */
+.reel-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Overlay on top of video */
+.reel-overlay {
+  position: absolute;
+  bottom: 40px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: white;
+}
+
+/* Description - max 2 lines */
+.reel-description {
+  font-size: 14px;
+  line-height: 1.4;
+  max-width: 90%;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;      /* Limit to 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Visit Store Button */
+.visit-btn {
+  width: fit-content;
+  padding: 10px 18px;
+  background: #ff3b3b;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.visit-btn:hover {
+  background: #e02f2f;
+}

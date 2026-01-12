@@ -1,22 +1,25 @@
 // pages/PartnerLogin.jsx
 import "../../styles/auth-shared.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function FoodPartnerLogin() {
-
+  const navigate=useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const email=e.target.email.value;
+    const password=e.target.password.value; 
+    const response= await axios.post("http://localhost:3000/api/auth/food-partner/login",{
+      email,
+      password
+    },
+    {
+      withCredentials:true,
+    }
+  );
 
-    const loginData = {
-      email: e.target.email.value,
-      password: e.target.password.value,
-    };
-
-    console.log("Partner Login Data:", loginData);
-
-    // Example API call (use later)
-    // await axios.post("http://localhost:5000/api/food-partner/login", loginData);
+    console.log( response.data);
+    navigate("/create-food");
   };
 
   return (

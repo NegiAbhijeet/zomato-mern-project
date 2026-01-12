@@ -1,29 +1,35 @@
 import "../../styles/auth-shared.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 export default function FoodPartnerRegister() {
-  const [formData, setFormData] = useState({
-    businessName: "",
-    contactName: "",
-    phone: "",
-    address: "",
-    email: "",
-    password: "",
-  });
+  const navigate=useNavigate();
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const handleSubmit = async(e) => {
+    e.preventDefault(); 
+    const businessName=e.target.businessName.value;
+    const contactName=e.target.contactName.value;
+    const phone=e.target.phone.value;
+    const address=e.target.address.value;
+    const email=e.target.email.value;
+    const password=e.target.password.value;
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // 🔴 stops page reload
-    console.log("Food Partner Register Data:", formData);
+    const response=await axios.post("http://localhost:3000/api/auth/food-partner/register",{
+      name:businessName,
+      contactName,
+      phone,
+      address,
+      email,
+      password
+    },
+    {
+      withCredentials:true,
+    }
+  );
 
-    // later: send data to backend using fetch / axios
+    console.log(response.data);
+    navigate("/create-food");
   };
 
   return (
@@ -39,8 +45,7 @@ export default function FoodPartnerRegister() {
               type="text"
               name="businessName"
               placeholder="Food Hub Pvt Ltd"
-              value={formData.businessName}
-              onChange={handleChange}
+              required
             />
           </div>
 
@@ -50,8 +55,7 @@ export default function FoodPartnerRegister() {
               type="text"
               name="contactName"
               placeholder="John Doe"
-              value={formData.contactName}
-              onChange={handleChange}
+              required
             />
           </div>
 
@@ -61,8 +65,7 @@ export default function FoodPartnerRegister() {
               type="tel"
               name="phone"
               placeholder="+91 9876543210"
-              value={formData.phone}
-              onChange={handleChange}
+              required
             />
           </div>
 
@@ -72,8 +75,7 @@ export default function FoodPartnerRegister() {
               type="text"
               name="address"
               placeholder="Restaurant address"
-              value={formData.address}
-              onChange={handleChange}
+              required
             />
           </div>
 
@@ -83,8 +85,7 @@ export default function FoodPartnerRegister() {
               type="email"
               name="email"
               placeholder="partner@example.com"
-              value={formData.email}
-              onChange={handleChange}
+              required
             />
           </div>
 
@@ -94,8 +95,7 @@ export default function FoodPartnerRegister() {
               type="password"
               name="password"
               placeholder="••••••••"
-              value={formData.password}
-              onChange={handleChange}
+              required
             />
           </div>
 
