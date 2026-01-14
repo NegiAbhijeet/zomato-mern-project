@@ -7,15 +7,20 @@ const Home = () => {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/api/food")
-      .then((response) => {
+    const fetchFood = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/api/food",
+          { withCredentials: true }
+        );
         setVideos(response.data.foodItems);
-      },Credentials)
-      .catch((error) => {
-        console.error("Error fetching food items:", error);
-      });
-  }, []);
+      } catch (error) {
+        console.error("Error fetching food items:", error.response?.data || error.message);
+      }
+    };
+
+    fetchFood();
+  }, []); // ✅ important: run only once
 
   return (
     <div className="reels-container">
@@ -30,7 +35,6 @@ const Home = () => {
             playsInline
           />
 
-          {/* Overlay Content */}
           <div className="reel-overlay">
             <p className="reel-description">{item.description}</p>
             <Link
